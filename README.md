@@ -46,8 +46,8 @@ To run the code for Food101 for 32 concepts, run:
 ```
 python main.py --config configs/food_bn.yaml --num_attributes=3 --eps=1 --t=1 --lam=1 --seed=0 &
 ```
-#### CUB2002011
-To run the code for CUB2002011 for 32 concepts, run:
+#### CUB-200-2011
+To run the code for CUB-200-2011 for 32 concepts, run:
 ```
 python main.py --config configs/cub.yaml --num_attributes=3 --eps=1 --t=10 --lam=1 --seed=0 &
 ```
@@ -56,7 +56,7 @@ python main.py --config configs/cub.yaml --num_attributes=3 --eps=1 --t=10 --lam
 The following options are available for the parser:
 
 ```
---config: the configuration file
+--config: dataset's configuration file
 --seed: random seed value
 --num_attributes: the number of attributes
 --eps, --t, --lam: loss hyperparameters
@@ -75,5 +75,5 @@ For each dataset, the attributes options are as follows:
 To choose your desired attributes, you can add your values to `config_num_att_dict` in the function `update_num_attributes` located in `dataset_utils.py`.
 
 ### References
-Our work integrates on the foundational work of Yan et al. (2023) on ["Learning Concise and Descriptive Attributes for Visual Recognition"](https://arxiv.org/pdf/2308.03685). 
-The git repository for their paper can be found [here](https://github.com/wangyu-ustc/LM4CV)
+Our work integrates the foundational work of Yan et al. (2023) on ["Learning Concise and Descriptive Attributes for Visual Recognition"](https://arxiv.org/pdf/2308.03685). 
+The git repository for their paper can be found [here](https://github.com/wangyu-ustc/LM4CV).
