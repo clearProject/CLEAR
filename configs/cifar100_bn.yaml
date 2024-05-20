@@ -1,0 +1,12 @@
+# python main.py --config configs/cifar100_bn.yaml --num_attributes=3 --eps=0.1 --t=5 --lam=0.1 --seed=0 &
+dataset: cifar100
+attributes: cifar100
+model_type: clip
+model_size: ViT-B/32
+linear_epochs: 1000
+reinit: true # True/False
+lr: 0.01
+batch_size: 4096
+epochs: 4000
+linear_model: [linear, bn, linear]
+score_model: [bn, linear]

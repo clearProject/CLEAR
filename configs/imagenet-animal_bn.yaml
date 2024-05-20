@@ -1,0 +1,12 @@
+# python main.py --config configs/imagenet-animal_bn.yaml
+dataset: imagenet-animal
+attributes: imagenet-animal
+model_type: clip
+model_size: ViT-B/32
+linear_epochs: 500
+reinit: true # True/False
+lr: 0.01
+batch_size: 32768
+epochs: 2000
+linear_model: [linear, bn, linear] 
+score_model: [bn, linear] 

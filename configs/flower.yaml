@@ -1,0 +1,12 @@
+# python main.py --config configs/flower.yaml --num_attributes=3 --eps=0.1 --t=5 --lam=0.01 --seed=1 &
+dataset: flower
+attributes: flower
+model_type: clip
+model_size: ViT-B/32
+linear_epochs: 2000
+reinit: true # True/False
+lr: 0.001
+batch_size: 4096
+epochs: 20000
+linear_model: [linear, linear] 
+score_model: [linear]
