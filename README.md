@@ -1,6 +1,7 @@
 # CLEAR
+#### Implementation of the paper "Conceptual-Learning via Embedding Approximations for Reinforcing Interpretability and Transparency"
 ![Description of the image](./CLEAR.png)
-Implementation of the paper "Conceptual-Learning via Embedding Approximations for Reinforcing Interpretability and Transparency"
+
 
 ### Datasets
 Our code is running on the following datasets: CIFAR-10, CIFAR-100, Flowers102, Food101 and CUB-200-2011.
