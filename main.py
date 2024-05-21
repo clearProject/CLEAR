@@ -65,15 +65,10 @@ def main(cfg, args):
         with open(f"selectedconcepts/{cfg['dataset']}_{args.num_attributes}_chosen_concepts.txt", "w") as f:
             for attr in attributes:
                 f.write(f"{attr}\n")
-    # get attributes back from the file with each line as an attribute
-
 
     if cfg['reinit'] and args.num_attributes != 'full' and args.selection_method in {1, 2}:
-        # assert cfg['cluster_feature_method'] == 'linear'
         feature_train_loader, feature_test_loader = get_feature_dataloader(cfg)
         model[0].weight.data = attributes_embeddings.cuda() * model[0].weight.data.norm(dim=-1, keepdim=True)
-        # create random weight for the last layer
-        # model[1].weight.data = torch.randn(model[1].weight.data.shape).cuda()
         for param in model[0].parameters():
             param.requires_grad = False
         best_model, best_acc = train_model(args, cfg, cfg['epochs'], model, feature_train_loader, feature_test_loader,
