@@ -1,4 +1,5 @@
 # CLEAR
+![Description of the image](./CLEAR.png)
 Implementation of the paper "Conceptual-Learning via Embedding Approximations for Reinforcing Interpretability and Transparency"
 
 ### Datasets
