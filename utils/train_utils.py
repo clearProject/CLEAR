@@ -24,23 +24,6 @@ def set_seed(seed):
     torch.backends.cudnn.deterministic = True
 
 
-"""
-def construct_attributes_save_path(cfg, args):
-    if cfg['cluster_feature_method'] == 'random' or cfg['cluster_feature_method'] == 'kmeans':
-        mahalanobis = False
-    else:
-        mahalanobis = cfg['mahalanobis']
-
-    if not mahalanobis:
-        return cfg['dataset'] + '_' + cfg['attributes'] + '_' \
-            + '_' + cfg['cluster_feature_method'] + '_' + str(args.num_attributes) + '_' + str(cfg['reinit']) + '.txt'
-    else:
-        return cfg['dataset'] + '_' + cfg['attributes'] + '_' \
-            + '_' + cfg['cluster_feature_method'] + '_' + str(args.num_attributes) + "_" + 'mahalanobis' + '_' + str(
-                args.division_power) + '_' + str(cfg['reinit']) + '.txt'
-"""
-
-
 def get_model(args, cfg, model, input_dim, output_dim):
     if args.num_attributes == 'full':
         num_attributes = len(get_attributes(cfg, args))
@@ -144,20 +127,6 @@ def get_score_dataloader(cfg, attribute_embeddings):
     return train_loader, test_loader
 
 
-"""
-def calculate_worst_group_acc(predictions, labels, groups):
-    st = time.time()
-    comparison = predictions == labels
-    worst_group_acc = 1
-    for i in range(4):
-        indices = torch.where(groups == i)
-        acc = torch.sum(comparison[indices]) / len(indices[0])
-        worst_group_acc = min(worst_group_acc, acc)
-    et = time.time()
-    return worst_group_acc
-"""
-
-
 def train_model(args, cfg, epochs, model, train_loader, test_loader, score_net=None, regularizer=None, configs=None, first=True):
     model.cuda()
     optimizer = torch.optim.Adam(model.parameters(), lr=cfg['lr'])
@@ -216,47 +185,7 @@ def train_model(args, cfg, epochs, model, train_loader, test_loader, score_net=N
                     configs['sigma_inv'].cuda()) - configs['mean_distance']) / (
                                            configs['mean_distance'] ** args.division_power)
                 loss += torch.abs(mahalanobis_loss)
-            """
-                                    mahalanobis_loss = (mahalanobis_distance(
-                                    model[0].weight / model[0].weight.data.norm(dim=-1, keepdim=True), configs['mu'].cuda(),
-                                    configs['sigma_inv'].cuda()) - configs['mean_distance']) / (
-                                                           configs['mean_distance'] ** args.division_power)
-                                loss += torch.abs(mahalanobis_loss)
-            """
-
-            """
-            if args.use_img_mah:
-                img_mahalanobis_loss = (mahalanobis_distance(s, configs['mu'].cuda(), configs['sigma_inv'].cuda())
-                                        - configs['mean_distance']) / (configs['mean_distance'] ** args.division_power)
-                loss += torch.abs(img_mahalanobis_loss)
-            learned_mu = torch.mean(learned_att, dim=0)
-            learned_sigma_inv = torch.tensor(np.linalg.inv(np.cov(learned_att.cpu().detach().numpy().T))).cuda()
-            learned_sigma_inv = learned_sigma_inv.type_as(learned_att)
-            learned_mean = torch.mean(
-                torch.tensor([mahalanobis_distance(embed, learned_mu, learned_sigma_inv) for embed in
-                              learned_att]))
-            learned_mean = learned_mean.type_as(learned_att)
-            inter_mahalanobis_loss = (mahalanobis_distance(learned_att, learned_mu, learned_sigma_inv)
-                                      - learned_mean) / (learned_mean ** args.division_power)
-            if cfg['enclose_mah']:
-                # distance between inter_mahalanobis_loss and mahalanobis_loss
-                inter_mahalanobis_loss = torch.abs(inter_mahalanobis_loss - mahalanobis_loss)
-            loss += torch.abs(inter_mahalanobis_loss)
-        # js_div = distance.jensenshannon(model[0].weight/model[0].weight.data.norm(dim=-1, keepdim=True), b, axis=0)
-            """
-            """
-            elif use_kl_div:
-                kl_div_lambda = 1
-                learned_att = model[0].weight / model[0].weight.data.norm(dim=-1, keepdim=True)
-                kl_div_loss = kl_div(torch.mean(learned_att, dim=0), configs['mu'].cuda(),
-                                     torch.var(learned_att, dim=0), configs['var'].cuda())
-                loss += kl_div_lambda * torch.abs(kl_div_loss.mean())
-
-            elif regularizer == 'cosine':
-                weight = model[0].weight / model[0].weight.data.norm(dim=-1, keepdim=True)
-                loss += cfg['lambda'] * torch.sum((weight - configs['mu'].unsqueeze(0).cuda()) ** 2, dim=-1).mean()
-"""
-
+                
             total_hit += torch.sum(t == output.argmax(-1))
             total_num += len(t)
 
