@@ -1,5 +1,5 @@
 # CLEAR
-#### Implementation of the paper "Conceptual-Learning via Embedding Approximations for Reinforcing Interpretability and Transparency"
+Implementation of the paper **"Conceptual-Learning via Embedding Approximations for Reinforcing Interpretability and Transparency"**
 ![Description of the image](./CLEAR.png)
 
 
